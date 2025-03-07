@@ -126,7 +126,21 @@ app.get("/fetch-movie/:id", async (req, res) => {
     const searchData = searchResponse?.data;
     const movieId = searchData?.searchResult[0]?.id;
     const movieTitle = searchData?.searchResult[0]?.t;
-    const playlistResponse = await axios.get(`https://netfree.cc/playlist.php?id=${movieId}&${movieTitle}`);
+    const playlistResponse = await axios.get(`https://netfree.cc/playlist.php?id=${movieId}&${movieTitle}`,{
+      headers: {
+        'Accept': 'application/json',
+        'Accept-Encoding': 'gzip, deflate, br, zstd',
+        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36',
+        'Cache-Control': 'no-cache',
+        'Dnt': '1',
+        'Cookie': 'HstCfa1190725=1741034954946; HstCmu1190725=1741034954946; 81715676=224%3A8586; lang=hin; recentplay=81760372-81566553-81715676-81416258; 81760372=25%3A7688; user_token=43520a13a2d3bf9935a206cb7394aad3; t_hash_t=3c302c0c86f899166e785fb77a2e68e7%3A%3A5d36a424b3f858a8da58cf1803e9c512%3A%3A1741295336%3A%3Ani; HstCnv1190725=5; HstCns1190725=9; c_ref_1190725=https%3A%2F%2Fnetmirror.app%2F; HstCla1190725=1741377701314; HstPn1190725=2; HstPt1190725=31; t_hash=ea2dc534e8c7797163468646566c1bc1%3A%3A1741379710%3A%3Ani',
+        'Sec-Fetch-Dest': 'document',
+        'Sec-Fetch-Mode': 'navigate',
+        'Sec-Fetch-Site': 'none',
+        'Sec-Fetch-User': '?1',
+        'Upgrade-Insecure-Requests': '1',
+        'X-Requested-With': 'XMLHttpRequest',
+      });
     const playlistData = playlistResponse.data;
     res.json({ movie, playlistData});
   } catch (error) {
