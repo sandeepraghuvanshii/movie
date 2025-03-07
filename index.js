@@ -140,6 +140,7 @@ app.get("/fetch-movie/:id", async (req, res) => {
         'Sec-Fetch-User': '?1',
         'Upgrade-Insecure-Requests': '1',
         'X-Requested-With': 'XMLHttpRequest',
+      }
       });
     const playlistData = playlistResponse.data;
     res.json({ movie, playlistData});
