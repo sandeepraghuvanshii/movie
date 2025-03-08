@@ -156,7 +156,7 @@ app.post("/movies", async (req, res) => {
 });
 
 
-app.patch('/movies/:id/urls', async (req, res) => {
+app.put('/movies/:id/urls', async (req, res) => {
   const movieId = req.params.id;
   const newUrls = req.body.urls;  // Expecting only the 'urls' array in the request body
 
