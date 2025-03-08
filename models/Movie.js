@@ -62,6 +62,10 @@ const movieSchema = new mongoose.Schema({
     credit_id: { type: String },
     order: { type: Number }
   }],
+  urls: [{
+    file: { type: String},
+    label: { type: String}
+  }]
 });
 
 const Movie = mongoose.model('Movie', movieSchema);
