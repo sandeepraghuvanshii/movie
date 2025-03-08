@@ -162,39 +162,24 @@ app.post("/movies", async (req, res) => {
 });
 
 
-// Endpoint to update video URLs for a movie by its ID using PATCH
-app.patch("/movies/:id/urls", async (req, res) => {
-  const { id } = req.params;
-  const { low, medium, high } = req.body;  // Extract the video URLs from the request body
-
-  // Check if at least one URL is provided
-  if (!low && !medium && !high) {
-    return res.status(400).json({ message: "At least one video URL (low, medium, or high) is required." });
-  }
+app.patch('/movies/:id/urls', async (req, res) => {
+  const movieId = req.params.id;
+  const newUrls = req.body.urls;  // Expecting only the 'urls' array in the request body
 
   try {
-    // Find the movie by its ID and update the URLs
-    const updatedMovie = await Movie.findByIdAndUpdate(
-      id,
-      {
-        $set: {
-          "urls.low": low,
-          "urls.medium": medium,
-          "urls.high": high,
-        },
-      },
-      { new: true } // Return the updated movie document
+    const movie = await Movie.findOneAndUpdate(
+      { _id: movieId },  
+      { $set: { urls: newUrls } }, // Update only the 'urls' field
+      { new: true }
     );
 
-    // If the movie with the given ID is not found
-    if (!updatedMovie) {
-      return res.status(404).json({ message: "Movie not found." });
+    if (!movie) {
+      return res.status(404).json({ message: 'Movie not found' });
     }
 
-    // Return the updated movie details
-    res.status(200).json(updatedMovie);
+    res.status(200).json(movie);  // Send the updated movie
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(400).json({ error: error.message });
   }
 });
 
