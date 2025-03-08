@@ -121,14 +121,8 @@ app.get("/fetch-movie/:id", async (req, res) => {
       })),
     };
 
-    // Now use the movie title to search on netfree.cc
-    const searchResponse = await axios.get(`https://netfree.cc/search.php?s=${encodeURIComponent(movie.title)}`);
-    const searchData = searchResponse?.data;
-    const movieId = searchData?.searchResult[0]?.id;
-    const movieTitle = searchData?.searchResult[0]?.t;
-    const playlistResponse = await axios.get(`https://netfree.cc/playlist.php?id=${movieId}&${movieTitle}`);
-    const playlistData = playlistResponse.data;
-    res.json({ movie, searchData, playlistData});
+    
+    res.json({ movie});
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
